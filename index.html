@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sendly — Email Marketing That Converts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cream: #f7f4ef;
+      --white: #ffffff;
+      --ink: #0f0e0c;
+      --ink-soft: #4a4740;
+      --ink-muted: #9a9590;
+      --accent: #7c3aed;
+      --accent-hover: #6d28d9;
+      --accent-light: #f3eeff;
+      --border: #e8e4de;
+      --card: #ffffff;
+    }
+
+    body.dark {
+      --cream: #0c0a0f;
+      --white: #13111a;
+      --ink: #f0edf7;
+      --ink-soft: #a09ab0;
+      --ink-muted: #5a5468;
+      --accent-light: #1e1530;
+      --border: #1f1b2e;
+      --card: #13111a;
+    }
+
+    html { scroll-behavior: smooth;
+          overflow-x: hidden; 
+        }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(247,244,239,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+
+    body.dark nav { background: rgba(12,10,15,0.88); }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 1.3rem; color: var(--ink); text-decoration: none; letter-spacing: -0.03em;
+    }
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.88rem; color: var(--ink-soft); text-decoration: none;
+      font-weight: 500; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    .nav-cta { display: flex; gap: 0.8rem; align-items: center; }
+
+    .btn-ghost {
+      font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500;
+      background: none; border: none; cursor: pointer;
+      color: var(--ink-soft); padding: 0.6rem 1.2rem;
+      border-radius: 100px; transition: all 0.2s;
+    }
+    .btn-ghost:hover { color: var(--ink); background: var(--border); }
+
+    .btn-primary {
+      font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600;
+      background: var(--accent); color: #fff;
+      border: none; cursor: pointer;
+      padding: 0.65rem 1.4rem; border-radius: 100px;
+      transition: all 0.2s; text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+    #theme-toggle {
+      font-size: 1.1rem; padding: 0.5rem 0.7rem; border-radius: 8px;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center;
+      padding: 8rem 2rem 4rem; position: relative; overflow: hidden;
+    }
+
+    .shape {
+      position: absolute; border-radius: 50%; filter: blur(80px);
+      pointer-events: none; opacity: 0.25;
+    }
+    .shape-1 { width: 600px; height: 600px; background: #c4b5fd; top: -150px; right: -150px; }
+    .shape-2 { width: 400px; height: 400px; background: #818cf8; bottom: 0; left: -100px; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--white); border: 1px solid var(--border);
+      padding: 0.4rem 1rem; border-radius: 100px;
+      font-size: 0.8rem; color: var(--ink-soft); font-weight: 500;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem); font-weight: 800;
+      line-height: 1.0; letter-spacing: -0.04em; color: var(--ink);
+      max-width: 860px; margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease 0.1s both;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+
+    .hero p {
+      font-size: 1.1rem; color: var(--ink-soft); max-width: 500px;
+      line-height: 1.75; margin-bottom: 2.5rem; font-weight: 300;
+      animation: fadeUp 0.6s ease 0.2s both;
+    }
+
+    .hero-actions {
+      display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.6s ease 0.3s both;
+    }
+
+    .btn-large { font-size: 1rem !important; padding: 0.9rem 2.2rem !important; }
+
+    .hero-note {
+      font-size: 0.78rem; color: var(--ink-muted); margin-top: 1.2rem;
+      animation: fadeUp 0.6s ease 0.4s both;
+    }
+
+    /* MOCKUP */
+    .hero-mockup {
+      margin-top: 4rem; width: 100%; max-width: 860px;
+      background: var(--white); border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 24px 80px rgba(124,58,237,0.08), 0 4px 20px rgba(0,0,0,0.05);
+      overflow: hidden;
+      animation: fadeUp 0.8s ease 0.5s both;
+    }
+
+    .mockup-bar {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.9rem 1.2rem; background: var(--cream);
+      border-bottom: 1px solid var(--border);
+    }
+    .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .mockup-dot:nth-child(1) { background: #ff5f57; }
+    .mockup-dot:nth-child(2) { background: #ffbd2e; }
+    .mockup-dot:nth-child(3) { background: #28c840; }
+    .mockup-url {
+      flex: 1; background: var(--white); border: 1px solid var(--border);
+      border-radius: 6px; padding: 0.3rem 0.8rem;
+      font-size: 0.75rem; color: var(--ink-muted); text-align: center; margin: 0 1rem;
+    }
+
+    .mockup-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+
+    .mockup-top { display: flex; justify-content: space-between; align-items: center; }
+    .mockup-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: var(--ink); }
+    .mockup-btn {
+      background: var(--accent); color: #fff; border: none;
+      padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
+
+    .mockup-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .mockup-stat {
+      background: var(--cream); border-radius: 10px; padding: 1rem;
+      border: 1px solid var(--border);
+    }
+    .mockup-stat-label { font-size: 0.7rem; color: var(--ink-muted); margin-bottom: 0.3rem; }
+    .mockup-stat-value { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--ink); }
+    .mockup-stat-change { font-size: 0.68rem; color: #16a34a; margin-top: 0.2rem; }
+
+    .mockup-campaigns { display: flex; flex-direction: column; gap: 0.5rem; }
+    .mockup-campaign-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.7rem 1rem; background: var(--cream);
+      border-radius: 8px; border: 1px solid var(--border);
+    }
+    .mockup-campaign-name { font-size: 0.78rem; font-weight: 500; color: var(--ink); }
+    .mockup-campaign-status {
+      font-size: 0.68rem; padding: 0.2rem 0.6rem; border-radius: 100px; font-weight: 600;
+    }
+    .status-sent { background: #dcfce7; color: #16a34a; }
+    .status-draft { background: var(--accent-light); color: var(--accent); }
+    .status-scheduled { background: #fef9c3; color: #ca8a04; }
+    .mockup-campaign-rate { font-size: 0.75rem; color: var(--ink-muted); }
+
+    /* LOGOS */
+    .logos {
+      padding: 3rem 4rem; text-align: center;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      background: var(--white);
+    }
+    .logos p { font-size: 0.78rem; color: var(--ink-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .logos-grid { display: flex; justify-content: center; align-items: center; gap: 3rem; flex-wrap: wrap; }
+    .logo-item { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: var(--ink-muted); opacity: 0.45; }
+
+    /* SECTIONS */
+    .section-tag {
+      display: inline-block; font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
+      background: var(--accent-light); padding: 0.3rem 0.8rem; border-radius: 100px; margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; letter-spacing: -0.03em; color: var(--ink);
+      max-width: 600px; line-height: 1.15; margin-bottom: 1rem;
+    }
+    .section-sub {
+      font-size: 1rem; color: var(--ink-soft); max-width: 480px;
+      line-height: 1.7; font-weight: 300; margin-bottom: 4rem;
+    }
+
+    /* FEATURES */
+    .features { padding: 7rem 4rem; max-width: 1140px; margin: 0 auto; width: 100%; }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+    .feature-card {
+      background: var(--white); border-radius: 16px; padding: 2rem;
+      border: 1px solid var(--border); transition: all 0.3s; cursor: default;
+    }
+    .feature-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(124,58,237,0.08); }
+
+    .feature-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--accent-light); display: flex; align-items: center;
+      justify-content: center; font-size: 1.2rem; margin-bottom: 1.2rem;
+    }
+    .feature-card h3 { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--ink); margin-bottom: 0.6rem; letter-spacing: -0.02em; }
+    .feature-card p { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.7; font-weight: 300; }
+
+    /* HOW */
+    .how { padding: 7rem 4rem; background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .how-inner { max-width: 1140px; margin: 0 auto; width: 100%; }
+    .how-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 4rem; }
+    .step { display: flex; flex-direction: column; gap: 1rem; }
+    .step-number { font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800; color: var(--border); line-height: 1; letter-spacing: -0.04em; }
+    .step h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; }
+    .step p { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.7; font-weight: 300; }
+
+    /* PRICING */
+    .pricing { padding: 7rem 4rem; max-width: 1140px; margin: 0 auto; text-align: center; width: 100%; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 4rem; text-align: left; }
+
+    .pricing-card { background: var(--white); border-radius: 16px; padding: 2rem; border: 1px solid var(--border); transition: all 0.3s; position: relative; }
+    .pricing-card.popular { background: var(--accent); border-color: var(--accent); transform: scale(1.02); }
+
+    .popular-badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--ink); color: var(--white);
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 0.3rem 0.9rem; border-radius: 100px;
+    }
+
+    .pricing-plan { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 1rem; }
+    .pricing-card.popular .pricing-plan { color: rgba(255,255,255,0.6); }
+    .pricing-price { font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--ink); letter-spacing: -0.04em; margin-bottom: 0.3rem; }
+    .pricing-card.popular .pricing-price { color: #fff; }
+    .pricing-period { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1.5rem; }
+    .pricing-card.popular .pricing-period { color: rgba(255,255,255,0.5); }
+    .pricing-divider { height: 1px; background: var(--border); margin-bottom: 1.5rem; }
+    .pricing-card.popular .pricing-divider { background: rgba(255,255,255,0.2); }
+    .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 2rem; }
+    .pricing-features li { font-size: 0.88rem; color: var(--ink-soft); display: flex; gap: 0.6rem; }
+    .pricing-card.popular .pricing-features li { color: rgba(255,255,255,0.8); }
+    .pricing-features li::before { content: "✓"; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+    .pricing-card.popular .pricing-features li::before { color: #fff; }
+
+    .btn-outline {
+      display: block; text-align: center; font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem; font-weight: 500; border: 1px solid var(--border);
+      background: none; color: var(--ink); padding: 0.75rem; border-radius: 8px;
+      cursor: pointer; transition: all 0.2s; text-decoration: none;
+    }
+    .btn-outline:hover { background: var(--cream); }
+    .btn-white {
+      display: block; text-align: center; font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem; font-weight: 600; background: #fff; color: var(--accent);
+      border: none; padding: 0.75rem; border-radius: 8px;
+      cursor: pointer; transition: all 0.2s; text-decoration: none;
+    }
+    .btn-white:hover { background: var(--ink); color: #fff; }
+
+    /* TESTIMONIALS */
+    .testimonials { padding: 7rem 4rem; background: var(--cream); }
+    .testimonials-inner { max-width: 1140px; margin: 0 auto; width: 100%; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 4rem; }
+
+    .testimonial-card { background: var(--white); border-radius: 16px; padding: 2rem; border: 1px solid var(--border); }
+    .testimonial-stars { color: var(--accent); font-size: 0.9rem; margin-bottom: 1rem; letter-spacing: 2px; }
+    .testimonial-text { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.75; font-weight: 300; margin-bottom: 1.5rem; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: 0.8rem; }
+    .testimonial-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--accent-light); display: flex; align-items: center;
+      justify-content: center; font-size: 0.9rem; font-weight: 700;
+      color: var(--accent); font-family: 'Syne', sans-serif;
+    }
+    .testimonial-name { font-size: 0.85rem; font-weight: 600; color: var(--ink); }
+    .testimonial-role { font-size: 0.75rem; color: var(--ink-muted); }
+
+    /* CTA */
+    .cta { padding: 7rem 4rem; text-align: center; background: var(--ink); }
+    .cta h2 { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; letter-spacing: -0.03em; color: #fff; margin-bottom: 1rem; line-height: 1.1; }
+    .cta h2 em { color: var(--accent); font-style: italic; }
+    .cta p { font-size: 1rem; color: rgba(255,255,255,0.45); margin-bottom: 2.5rem; font-weight: 300; }
+    .cta .btn-primary { font-size: 1rem; padding: 0.9rem 2.2rem; }
+
+    /* FOOTER */
+    footer {
+      padding: 3rem 4rem; background: var(--ink);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; color: #fff; letter-spacing: -0.03em; }
+    .footer-logo span { color: var(--accent); }
+    footer p { font-size: 0.8rem; color: rgba(255,255,255,0.3); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* TABLET */
+    @media (max-width: 1024px) {
+      nav { padding: 1rem 2rem; }
+      .features, .how, .pricing, .testimonials, .cta { padding: 5rem 2rem; }
+      .logos { padding: 2.5rem 2rem; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero { padding: 7rem 2rem 3rem; }
+      footer { padding: 2.5rem 2rem; }
+      .features { max-width: 100%; }
+      .pricing { max-width: 100%; }
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.2rem; }
+      .nav-links { display: none; }
+      .nav-cta .btn-ghost:not(#theme-toggle) { display: none; }
+      .features, .how, .pricing, .testimonials, .cta { padding: 4rem 1.2rem; }
+      .logos { padding: 2rem 1.2rem; }
+      .logos-grid { gap: 1.5rem; }
+      .features-grid, .how-steps, .pricing-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      .pricing-card.popular { transform: none; }
+      .mockup-stats { grid-template-columns: repeat(2, 1fr); }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.2rem; }
+      .hero { padding: 6rem 1.2rem 3rem; }
+      .hero h1 { font-size: 2.6rem; }
+      .hero p { font-size: 1rem; }
+      .hero-actions { flex-direction: column; width: 100%; }
+      .hero-actions a, .hero-actions button { width: 100%; text-align: center; }
+      .hero-mockup { margin-top: 2.5rem; }
+      .mockup-campaign-rate { display: none; }
+      .section-title { font-size: 1.8rem; }
+      .cta h2 { font-size: 2rem; }
+      .features { max-width: 100%; }
+      .pricing { max-width: 100%; }
+    }
+
+    @media (max-width: 400px) {
+      .hero h1 { font-size: 2rem; }
+      .mockup-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Send<span>ly</span></a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+    <div class="nav-cta">
+      <button class="btn-ghost" id="theme-toggle" onclick="toggleTheme()">🌙</button>
+      <button class="btn-ghost">Log in</button>
+      <a href="#" class="btn-primary">Start free</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Trusted by 10,000+ marketers worldwide
+    </div>
+
+    <h1>Email marketing<br />that <em>actually converts.</em></h1>
+    <p>Sendly helps you design, send, and track beautiful email campaigns that turn subscribers into customers.</p>
+
+    <div class="hero-actions">
+      <a href="#" class="btn-primary btn-large">Start for free</a>
+      <button class="btn-ghost" style="font-size:1rem;">See a demo →</button>
+    </div>
+    <p class="hero-note">Free up to 1,000 contacts · No credit card required · Cancel anytime</p>
+
+    <div class="hero-mockup">
+      <div class="mockup-bar">
+        <div class="mockup-dot"></div>
+        <div class="mockup-dot"></div>
+        <div class="mockup-dot"></div>
+        <div class="mockup-url">app.sendly.io/campaigns</div>
+      </div>
+      <div class="mockup-body">
+        <div class="mockup-top">
+          <div class="mockup-title">Campaign Overview</div>
+          <button class="mockup-btn">+ New Campaign</button>
+        </div>
+        <div class="mockup-stats">
+          <div class="mockup-stat">
+            <div class="mockup-stat-label">Emails Sent</div>
+            <div class="mockup-stat-value">48.2K</div>
+            <div class="mockup-stat-change">↑ 18% this month</div>
+          </div>
+          <div class="mockup-stat">
+            <div class="mockup-stat-label">Open Rate</div>
+            <div class="mockup-stat-value">42.6%</div>
+            <div class="mockup-stat-change">↑ Above average</div>
+          </div>
+          <div class="mockup-stat">
+            <div class="mockup-stat-label">Click Rate</div>
+            <div class="mockup-stat-value">8.4%</div>
+            <div class="mockup-stat-change">↑ 2.1% vs last month</div>
+          </div>
+          <div class="mockup-stat">
+            <div class="mockup-stat-label">Revenue</div>
+            <div class="mockup-stat-value">$12.4K</div>
+            <div class="mockup-stat-change">↑ From campaigns</div>
+          </div>
+        </div>
+        <div class="mockup-campaigns">
+          <div class="mockup-campaign-row">
+            <div class="mockup-campaign-name">🛍️ Black Friday Sale</div>
+            <span class="mockup-campaign-status status-sent">Sent</span>
+            <div class="mockup-campaign-rate">Open: 54% · Click: 12%</div>
+          </div>
+          <div class="mockup-campaign-row">
+            <div class="mockup-campaign-name">👋 Welcome Series</div>
+            <span class="mockup-campaign-status status-sent">Sent</span>
+            <div class="mockup-campaign-rate">Open: 68% · Click: 22%</div>
+          </div>
+          <div class="mockup-campaign-row">
+            <div class="mockup-campaign-name">🎁 Holiday Newsletter</div>
+            <span class="mockup-campaign-status status-scheduled">Scheduled</span>
+            <div class="mockup-campaign-rate">Dec 20 · 9:00 AM</div>
+          </div>
+          <div class="mockup-campaign-row">
+            <div class="mockup-campaign-name">🚀 Product Launch</div>
+            <span class="mockup-campaign-status status-draft">Draft</span>
+            <div class="mockup-campaign-rate">Last edited today</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGOS -->
+  <div class="logos">
+    <p>Trusted by marketers at</p>
+    <div class="logos-grid">
+      <div class="logo-item">Shopify</div>
+      <div class="logo-item">HubSpot</div>
+      <div class="logo-item">Stripe</div>
+      <div class="logo-item">Webflow</div>
+      <div class="logo-item">Paystack</div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="reveal">
+      <span class="section-tag">Features</span>
+      <h2 class="section-title">Everything you need to grow your list.</h2>
+      <p class="section-sub">From drag-and-drop templates to AI-powered subject lines — Sendly has it all built in.</p>
+    </div>
+    <div class="features-grid reveal">
+      <div class="feature-card">
+        <div class="feature-icon">✉️</div>
+        <h3>Drag & drop editor</h3>
+        <p>Design stunning emails in minutes. No coding needed. 100+ templates ready to go.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>AI subject lines</h3>
+        <p>Let AI write subject lines proven to boost open rates. A/B test automatically.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Smart automation</h3>
+        <p>Set up welcome sequences, cart recovery, and re-engagement flows in minutes.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Deep analytics</h3>
+        <p>Track opens, clicks, revenue, and unsubscribes in real time. Know what works.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Audience segmentation</h3>
+        <p>Send the right email to the right person. Segment by behavior, location, and more.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔗</div>
+        <h3>100+ integrations</h3>
+        <p>Connect Shopify, WooCommerce, Stripe, Zapier and more. Sendly fits your stack.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="how-inner">
+      <div class="reveal">
+        <span class="section-tag">How it works</span>
+        <h2 class="section-title">Send your first campaign in 10 minutes.</h2>
+        <p class="section-sub">No onboarding calls. No setup fees. Just sign up and start growing.</p>
+      </div>
+      <div class="how-steps reveal">
+        <div class="step">
+          <div class="step-number">01</div>
+          <h3>Import your contacts</h3>
+          <p>Upload a CSV or connect your store. Sendly syncs your audience automatically.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">02</div>
+          <h3>Design your email</h3>
+          <p>Pick a template, drag in your content, and let AI optimize your subject line.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">03</div>
+          <h3>Send & watch it grow</h3>
+          <p>Hit send or schedule for later. Watch your open rates, clicks, and revenue roll in.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="reveal">
+      <span class="section-tag">Pricing</span>
+      <h2 class="section-title" style="margin: 0 auto 1rem;">Pricing that scales with you.</h2>
+      <p class="section-sub" style="margin: 0 auto;">Start free. Upgrade when you're ready. No surprises.</p>
+    </div>
+    <div class="pricing-grid reveal">
+      <div class="pricing-card">
+        <div class="pricing-plan">Free</div>
+        <div class="pricing-price">$0</div>
+        <div class="pricing-period">Up to 1,000 contacts</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>1,000 emails/month</li>
+          <li>Drag & drop editor</li>
+          <li>Basic templates</li>
+          <li>Email support</li>
+        </ul>
+        <a href="#" class="btn-outline">Get started free</a>
+      </div>
+      <div class="pricing-card popular">
+        <div class="popular-badge">Most popular</div>
+        <div class="pricing-plan">Growth</div>
+        <div class="pricing-price">$19</div>
+        <div class="pricing-period">per month · up to 10,000 contacts</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Unlimited emails</li>
+          <li>AI subject lines</li>
+          <li>Automations</li>
+          <li>Advanced analytics</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="#" class="btn-white">Start free trial</a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-plan">Pro</div>
+        <div class="pricing-price">$49</div>
+        <div class="pricing-period">per month · unlimited contacts</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Everything in Growth</li>
+          <li>Custom domains</li>
+          <li>Dedicated IP</li>
+          <li>A/B testing</li>
+          <li>API access</li>
+        </ul>
+        <a href="#" class="btn-outline">Get started</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="testimonials-inner">
+      <div class="reveal">
+        <span class="section-tag">Testimonials</span>
+        <h2 class="section-title">Marketers love Sendly.</h2>
+      </div>
+      <div class="testimonials-grid reveal">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Switched from Mailchimp and never looked back. Our open rates went from 22% to 41% in the first month."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">T</div>
+            <div>
+              <div class="testimonial-name">Tunde Adeyemi</div>
+              <div class="testimonial-role">Founder, ShopNaija</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"The AI subject line tool alone is worth the subscription. Our Black Friday campaign was our best ever."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">L</div>
+            <div>
+              <div class="testimonial-name">Laura Kim</div>
+              <div class="testimonial-role">Head of Marketing, Buildbase</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Setup took 15 minutes. Sendly connected to our Shopify store and the automations just work. Incredible."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">O</div>
+            <div>
+              <div class="testimonial-name">Olivia Chen</div>
+              <div class="testimonial-role">E-commerce Director, Luxemode</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Ready to <em>grow your list?</em></h2>
+    <p>Join 10,000+ marketers already sending with Sendly. Free to start.</p>
+    <a href="#" class="btn-primary">Start for free →</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Send<span>ly</span></div>
+    <p>Built by Adebayo · 2026</p>
+  </footer>
+
+  <script>
+    // Theme toggle
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      const btn = document.getElementById('theme-toggle');
+      btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    }
+
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark');
+      document.getElementById('theme-toggle').textContent = '☀️';
+    }
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 100);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
